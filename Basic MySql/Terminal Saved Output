@@ -1,0 +1,330 @@
+Last login: Mon Sep 18 20:46:32 on console
+(base) yogendra@yogendras-MacBook-Pro ~ % /usr/local/mysql-8.0.23-macos10.15-x86_64/bin/mysql -u root -p
+Enter password: 
+ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/tmp/mysql.sock' (2)
+(base) yogendra@yogendras-MacBook-Pro ~ % /usr/local/mysql-8.0.23-macos10.15-x86_64/bin/mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.23 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| my1                |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.01 sec)
+
+mysql> create database arya_ds;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| arya_ds            |
+| information_schema |
+| my1                |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use arya_ds;
+Database changed
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table Student(
+    -> S_id int(10) PRIMARY KEY,
+    -> Name varchar(20),
+    -> Age int(3)
+    -> );
+Query OK, 0 rows affected, 2 warnings (0.02 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_arya_ds |
++-------------------+
+| Student           |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> -- show databases;
+mysql> insert into Student
+    -> values(1,"Aman",25);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Student;
++------+------+------+
+| S_id | Name | Age  |
++------+------+------+
+|    1 | Aman |   25 |
++------+------+------+
+1 row in set (0.00 sec)
+
+mysql> insert into Student
+    -> values(2,"Simran",26),
+    -> (3,"Ram",24),
+    -> (4,"Yogendra",20),
+    -> (5,"Tushar",20),
+    -> (6,"Yash",21),
+    -> (7,"Vishal",19),
+    -> (8,"Kartik",21),
+    -> (9,"Piyush",22),
+    -> (10,"Rahul",18)
+    -> ;
+Query OK, 9 rows affected (0.00 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> select * from Student;
++------+----------+------+
+| S_id | Name     | Age  |
++------+----------+------+
+|    1 | Aman     |   25 |
+|    2 | Simran   |   26 |
+|    3 | Ram      |   24 |
+|    4 | Yogendra |   20 |
+|    5 | Tushar   |   20 |
+|    6 | Yash     |   21 |
+|    7 | Vishal   |   19 |
+|    8 | Kartik   |   21 |
+|    9 | Piyush   |   22 |
+|   10 | Rahul    |   18 |
++------+----------+------+
+10 rows in set (0.00 sec)
+
+mysql> select Name form Student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Student' at line 1
+mysql> select Name from Student;
++----------+
+| Name     |
++----------+
+| Aman     |
+| Simran   |
+| Ram      |
+| Yogendra |
+| Tushar   |
+| Yash     |
+| Vishal   |
+| Kartik   |
+| Piyush   |
+| Rahul    |
++----------+
+10 rows in set (0.00 sec)
+
+mysql> select Age,Name form Student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Student' at line 1
+mysql> select Age,Name from Student;
++------+----------+
+| Age  | Name     |
++------+----------+
+|   25 | Aman     |
+|   26 | Simran   |
+|   24 | Ram      |
+|   20 | Yogendra |
+|   20 | Tushar   |
+|   21 | Yash     |
+|   19 | Vishal   |
+|   21 | Kartik   |
+|   22 | Piyush   |
+|   18 | Rahul    |
++------+----------+
+10 rows in set (0.00 sec)
+
+mysql> insert into Student(S_id,Age)
+    -> values(11,23);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Student;
++------+----------+------+
+| S_id | Name     | Age  |
++------+----------+------+
+|    1 | Aman     |   25 |
+|    2 | Simran   |   26 |
+|    3 | Ram      |   24 |
+|    4 | Yogendra |   20 |
+|    5 | Tushar   |   20 |
+|    6 | Yash     |   21 |
+|    7 | Vishal   |   19 |
+|    8 | Kartik   |   21 |
+|    9 | Piyush   |   22 |
+|   10 | Rahul    |   18 |
+|   11 | NULL     |   23 |
++------+----------+------+
+11 rows in set (0.00 sec)
+
+mysql> desc Student;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| S_id  | int         | NO   | PRI | NULL    |       |
+| Name  | varchar(20) | YES  |     | NULL    |       |
+| Age   | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> select * from Student where Age>25;
++------+--------+------+
+| S_id | Name   | Age  |
++------+--------+------+
+|    2 | Simran |   26 |
++------+--------+------+
+1 row in set (0.01 sec)
+
+mysql> select * from Student where age < 25 and sid > 2;
+ERROR 1054 (42S22): Unknown column 'sid' in 'where clause'
+mysql> select * from Student where age < 25 and S_id > 2;
++------+----------+------+
+| S_id | Name     | Age  |
++------+----------+------+
+|    3 | Ram      |   24 |
+|    4 | Yogendra |   20 |
+|    5 | Tushar   |   20 |
+|    6 | Yash     |   21 |
+|    7 | Vishal   |   19 |
+|    8 | Kartik   |   21 |
+|    9 | Piyush   |   22 |
+|   10 | Rahul    |   18 |
+|   11 | NULL     |   23 |
++------+----------+------+
+9 rows in set (0.00 sec)
+
+mysql> select * from Student where Name='Rahul' and Name='Yash';
+Empty set (0.00 sec)
+
+mysql> select * from Student where Name='Rahul' or Name='Yash';
++------+-------+------+
+| S_id | Name  | Age  |
++------+-------+------+
+|    6 | Yash  |   21 |
+|   10 | Rahul |   18 |
++------+-------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from Student where Name in ('Kartik','Piyush');
++------+--------+------+
+| S_id | Name   | Age  |
++------+--------+------+
+|    8 | Kartik |   21 |
+|    9 | Piyush |   22 |
++------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from Student where not Name='Rahul';
++------+----------+------+
+| S_id | Name     | Age  |
++------+----------+------+
+|    1 | Aman     |   25 |
+|    2 | Simran   |   26 |
+|    3 | Ram      |   24 |
+|    4 | Yogendra |   20 |
+|    5 | Tushar   |   20 |
+|    6 | Yash     |   21 |
+|    7 | Vishal   |   19 |
+|    8 | Kartik   |   21 |
+|    9 | Piyush   |   22 |
++------+----------+------+
+9 rows in set (0.00 sec)
+
+mysql> create table Person(
+    -> Pid int(10),
+    -> Name varchar(20),
+    -> City varchar(20),
+    -> Dose1 varchar(5),
+    -> Dose2 varchar(5)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> desc Person;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| Pid   | int         | YES  |     | NULL    |       |
+| Name  | varchar(20) | YES  |     | NULL    |       |
+| City  | varchar(20) | YES  |     | NULL    |       |
+| Dose1 | varchar(5)  | YES  |     | NULL    |       |
+| Dose2 | varchar(5)  | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from Student order by Age;
++------+----------+------+
+| S_id | Name     | Age  |
++------+----------+------+
+|   10 | Rahul    |   18 |
+|    7 | Vishal   |   19 |
+|    4 | Yogendra |   20 |
+|    5 | Tushar   |   20 |
+|    6 | Yash     |   21 |
+|    8 | Kartik   |   21 |
+|    9 | Piyush   |   22 |
+|   11 | NULL     |   23 |
+|    3 | Ram      |   24 |
+|    1 | Aman     |   25 |
+|    2 | Simran   |   26 |
++------+----------+------+
+11 rows in set (0.00 sec)
+
+mysql> select * from Student order by Age Desc;
++------+----------+------+
+| S_id | Name     | Age  |
++------+----------+------+
+|    2 | Simran   |   26 |
+|    1 | Aman     |   25 |
+|    3 | Ram      |   24 |
+|   11 | NULL     |   23 |
+|    9 | Piyush   |   22 |
+|    6 | Yash     |   21 |
+|    8 | Kartik   |   21 |
+|    4 | Yogendra |   20 |
+|    5 | Tushar   |   20 |
+|    7 | Vishal   |   19 |
+|   10 | Rahul    |   18 |
++------+----------+------+
+11 rows in set (0.00 sec)
+
+mysql> select * from Student order by Name;
++------+----------+------+
+| S_id | Name     | Age  |
++------+----------+------+
+|   11 | NULL     |   23 |
+|    1 | Aman     |   25 |
+|    8 | Kartik   |   21 |
+|    9 | Piyush   |   22 |
+|   10 | Rahul    |   18 |
+|    3 | Ram      |   24 |
+|    2 | Simran   |   26 |
+|    5 | Tushar   |   20 |
+|    7 | Vishal   |   19 |
+|    6 | Yash     |   21 |
+|    4 | Yogendra |   20 |
++------+----------+------+
+11 rows in set (0.00 sec)
+
+mysql> select * from Student limit 4;
++------+----------+------+
+| S_id | Name     | Age  |
++------+----------+------+
+|    1 | Aman     |   25 |
+|    2 | Simran   |   26 |
+|    3 | Ram      |   24 |
+|    4 | Yogendra |   20 |
++------+----------+------+
+4 rows in set (0.00 sec)
+
+mysql> 

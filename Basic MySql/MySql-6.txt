@@ -1,0 +1,295 @@
+
+Setting environment for using XAMPP for Windows.
+user@DEEP c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.28-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]>
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| bank_data          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| practice           |
+| pydb               |
+| python11am         |
+| python2pm          |
+| python3pm          |
+| python7pm          |
+| python9am          |
+| python_intern      |
+| test               |
+| world              |
++--------------------+
+15 rows in set (0.044 sec)
+
+MariaDB [(none)]>
+MariaDB [(none)]>
+MariaDB [(none)]>
+MariaDB [(none)]>
+MariaDB [(none)]> -- having
+MariaDB [(none)]>
+MariaDB [(none)]>
+MariaDB [(none)]>
+MariaDB [(none)]>
+MariaDB [(none)]>
+MariaDB [(none)]>
+MariaDB [(none)]> -- joins
+MariaDB [(none)]>
+MariaDB [(none)]>
+MariaDB [(none)]>
+MariaDB [(none)]>
+MariaDB [(none)]> use python11am;
+Database changed
+MariaDB [python11am]> show tables;
++----------------------+
+| Tables_in_python11am |
++----------------------+
+| fees                 |
+| person               |
+| student              |
+| temp                 |
++----------------------+
+4 rows in set (0.002 sec)
+
+MariaDB [python11am]> select * from student;
++-----+--------+--------+
+| sid | name   | course |
++-----+--------+--------+
+|   1 | robin  | python |
+|   2 | aman   | aws    |
+|   3 | ram    | python |
+|   4 | rajat  | aws    |
+|   7 | naman  | python |
+|   8 | tanu   | aws    |
+|   9 | bharat | python |
+|  10 | gaurav | aws    |
+|  11 | deepak | aws    |
+|  12 | deep   | aws    |
++-----+--------+--------+
+10 rows in set (0.070 sec)
+
+MariaDB [python11am]> select * from fees;
++-----+------+-------+----------+-------+
+| fid | sid  | fees  | discount | paid  |
++-----+------+-------+----------+-------+
+| 101 |    1 | 20000 |     1000 |  6000 |
+| 102 |    2 | 15000 |        0 |  9000 |
+| 103 |    4 | 25000 |     1000 | 10000 |
+| 104 |    7 | 10000 |        0 |  9000 |
++-----+------+-------+----------+-------+
+4 rows in set (0.006 sec)
+
+MariaDB [python11am]> -- inner join
+MariaDB [python11am]> -- left join
+MariaDB [python11am]> -- right join
+MariaDB [python11am]> -- cross join
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> select * from student inner join fees on student.sid = fees.sid;
++-----+-------+--------+-----+------+-------+----------+-------+
+| sid | name  | course | fid | sid  | fees  | discount | paid  |
++-----+-------+--------+-----+------+-------+----------+-------+
+|   1 | robin | python | 101 |    1 | 20000 |     1000 |  6000 |
+|   2 | aman  | aws    | 102 |    2 | 15000 |        0 |  9000 |
+|   4 | rajat | aws    | 103 |    4 | 25000 |     1000 | 10000 |
+|   7 | naman | python | 104 |    7 | 10000 |        0 |  9000 |
++-----+-------+--------+-----+------+-------+----------+-------+
+4 rows in set (0.006 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> select * from student left join fees on student.sid = fees.sid;
++-----+--------+--------+------+------+-------+----------+-------+
+| sid | name   | course | fid  | sid  | fees  | discount | paid  |
++-----+--------+--------+------+------+-------+----------+-------+
+|   1 | robin  | python |  101 |    1 | 20000 |     1000 |  6000 |
+|   2 | aman   | aws    |  102 |    2 | 15000 |        0 |  9000 |
+|   4 | rajat  | aws    |  103 |    4 | 25000 |     1000 | 10000 |
+|   7 | naman  | python |  104 |    7 | 10000 |        0 |  9000 |
+|   3 | ram    | python | NULL | NULL |  NULL |     NULL |  NULL |
+|   8 | tanu   | aws    | NULL | NULL |  NULL |     NULL |  NULL |
+|   9 | bharat | python | NULL | NULL |  NULL |     NULL |  NULL |
+|  10 | gaurav | aws    | NULL | NULL |  NULL |     NULL |  NULL |
+|  11 | deepak | aws    | NULL | NULL |  NULL |     NULL |  NULL |
+|  12 | deep   | aws    | NULL | NULL |  NULL |     NULL |  NULL |
++-----+--------+--------+------+------+-------+----------+-------+
+10 rows in set (0.002 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]> select * from fees left join student on student.sid = fees.sid;
++-----+------+-------+----------+-------+------+-------+--------+
+| fid | sid  | fees  | discount | paid  | sid  | name  | course |
++-----+------+-------+----------+-------+------+-------+--------+
+| 101 |    1 | 20000 |     1000 |  6000 |    1 | robin | python |
+| 102 |    2 | 15000 |        0 |  9000 |    2 | aman  | aws    |
+| 103 |    4 | 25000 |     1000 | 10000 |    4 | rajat | aws    |
+| 104 |    7 | 10000 |        0 |  9000 |    7 | naman | python |
++-----+------+-------+----------+-------+------+-------+--------+
+4 rows in set (0.000 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> select * from student;
++-----+--------+--------+
+| sid | name   | course |
++-----+--------+--------+
+|   1 | robin  | python |
+|   2 | aman   | aws    |
+|   3 | ram    | python |
+|   4 | rajat  | aws    |
+|   7 | naman  | python |
+|   8 | tanu   | aws    |
+|   9 | bharat | python |
+|  10 | gaurav | aws    |
+|  11 | deepak | aws    |
+|  12 | deep   | aws    |
++-----+--------+--------+
+10 rows in set (0.000 sec)
+
+MariaDB [python11am]> select * from fees;
++-----+------+-------+----------+-------+
+| fid | sid  | fees  | discount | paid  |
++-----+------+-------+----------+-------+
+| 101 |    1 | 20000 |     1000 |  6000 |
+| 102 |    2 | 15000 |        0 |  9000 |
+| 103 |    4 | 25000 |     1000 | 10000 |
+| 104 |    7 | 10000 |        0 |  9000 |
++-----+------+-------+----------+-------+
+4 rows in set (0.000 sec)
+
+MariaDB [python11am]> select * from student right join fees on student.sid=fees.sid;
++------+-------+--------+-----+------+-------+----------+-------+
+| sid  | name  | course | fid | sid  | fees  | discount | paid  |
++------+-------+--------+-----+------+-------+----------+-------+
+|    1 | robin | python | 101 |    1 | 20000 |     1000 |  6000 |
+|    2 | aman  | aws    | 102 |    2 | 15000 |        0 |  9000 |
+|    4 | rajat | aws    | 103 |    4 | 25000 |     1000 | 10000 |
+|    7 | naman | python | 104 |    7 | 10000 |        0 |  9000 |
++------+-------+--------+-----+------+-------+----------+-------+
+4 rows in set (0.000 sec)
+
+MariaDB [python11am]> select * from fees right join student on student.sid=fees.sid;
++------+------+-------+----------+-------+-----+--------+--------+
+| fid  | sid  | fees  | discount | paid  | sid | name   | course |
++------+------+-------+----------+-------+-----+--------+--------+
+|  101 |    1 | 20000 |     1000 |  6000 |   1 | robin  | python |
+|  102 |    2 | 15000 |        0 |  9000 |   2 | aman   | aws    |
+|  103 |    4 | 25000 |     1000 | 10000 |   4 | rajat  | aws    |
+|  104 |    7 | 10000 |        0 |  9000 |   7 | naman  | python |
+| NULL | NULL |  NULL |     NULL |  NULL |   3 | ram    | python |
+| NULL | NULL |  NULL |     NULL |  NULL |   8 | tanu   | aws    |
+| NULL | NULL |  NULL |     NULL |  NULL |   9 | bharat | python |
+| NULL | NULL |  NULL |     NULL |  NULL |  10 | gaurav | aws    |
+| NULL | NULL |  NULL |     NULL |  NULL |  11 | deepak | aws    |
+| NULL | NULL |  NULL |     NULL |  NULL |  12 | deep   | aws    |
++------+------+-------+----------+-------+-----+--------+--------+
+10 rows in set (0.000 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> -- cross join
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> select * from student;
++-----+--------+--------+
+| sid | name   | course |
++-----+--------+--------+
+|   1 | robin  | python |
+|   2 | aman   | aws    |
+|   3 | ram    | python |
+|   4 | rajat  | aws    |
+|   7 | naman  | python |
+|   8 | tanu   | aws    |
+|   9 | bharat | python |
+|  10 | gaurav | aws    |
+|  11 | deepak | aws    |
+|  12 | deep   | aws    |
++-----+--------+--------+
+10 rows in set (0.000 sec)
+
+MariaDB [python11am]> select * from fees;
++-----+------+-------+----------+-------+
+| fid | sid  | fees  | discount | paid  |
++-----+------+-------+----------+-------+
+| 101 |    1 | 20000 |     1000 |  6000 |
+| 102 |    2 | 15000 |        0 |  9000 |
+| 103 |    4 | 25000 |     1000 | 10000 |
+| 104 |    7 | 10000 |        0 |  9000 |
++-----+------+-------+----------+-------+
+4 rows in set (0.000 sec)
+
+MariaDB [python11am]> select * from student cross join fees;
++-----+--------+--------+-----+------+-------+----------+-------+
+| sid | name   | course | fid | sid  | fees  | discount | paid  |
++-----+--------+--------+-----+------+-------+----------+-------+
+|   1 | robin  | python | 101 |    1 | 20000 |     1000 |  6000 |
+|   1 | robin  | python | 102 |    2 | 15000 |        0 |  9000 |
+|   1 | robin  | python | 103 |    4 | 25000 |     1000 | 10000 |
+|   1 | robin  | python | 104 |    7 | 10000 |        0 |  9000 |
+|   2 | aman   | aws    | 101 |    1 | 20000 |     1000 |  6000 |
+|   2 | aman   | aws    | 102 |    2 | 15000 |        0 |  9000 |
+|   2 | aman   | aws    | 103 |    4 | 25000 |     1000 | 10000 |
+|   2 | aman   | aws    | 104 |    7 | 10000 |        0 |  9000 |
+|   3 | ram    | python | 101 |    1 | 20000 |     1000 |  6000 |
+|   3 | ram    | python | 102 |    2 | 15000 |        0 |  9000 |
+|   3 | ram    | python | 103 |    4 | 25000 |     1000 | 10000 |
+|   3 | ram    | python | 104 |    7 | 10000 |        0 |  9000 |
+|   4 | rajat  | aws    | 101 |    1 | 20000 |     1000 |  6000 |
+|   4 | rajat  | aws    | 102 |    2 | 15000 |        0 |  9000 |
+|   4 | rajat  | aws    | 103 |    4 | 25000 |     1000 | 10000 |
+|   4 | rajat  | aws    | 104 |    7 | 10000 |        0 |  9000 |
+|   7 | naman  | python | 101 |    1 | 20000 |     1000 |  6000 |
+|   7 | naman  | python | 102 |    2 | 15000 |        0 |  9000 |
+|   7 | naman  | python | 103 |    4 | 25000 |     1000 | 10000 |
+|   7 | naman  | python | 104 |    7 | 10000 |        0 |  9000 |
+|   8 | tanu   | aws    | 101 |    1 | 20000 |     1000 |  6000 |
+|   8 | tanu   | aws    | 102 |    2 | 15000 |        0 |  9000 |
+|   8 | tanu   | aws    | 103 |    4 | 25000 |     1000 | 10000 |
+|   8 | tanu   | aws    | 104 |    7 | 10000 |        0 |  9000 |
+|   9 | bharat | python | 101 |    1 | 20000 |     1000 |  6000 |
+|   9 | bharat | python | 102 |    2 | 15000 |        0 |  9000 |
+|   9 | bharat | python | 103 |    4 | 25000 |     1000 | 10000 |
+|   9 | bharat | python | 104 |    7 | 10000 |        0 |  9000 |
+|  10 | gaurav | aws    | 101 |    1 | 20000 |     1000 |  6000 |
+|  10 | gaurav | aws    | 102 |    2 | 15000 |        0 |  9000 |
+|  10 | gaurav | aws    | 103 |    4 | 25000 |     1000 | 10000 |
+|  10 | gaurav | aws    | 104 |    7 | 10000 |        0 |  9000 |
+|  11 | deepak | aws    | 101 |    1 | 20000 |     1000 |  6000 |
+|  11 | deepak | aws    | 102 |    2 | 15000 |        0 |  9000 |
+|  11 | deepak | aws    | 103 |    4 | 25000 |     1000 | 10000 |
+|  11 | deepak | aws    | 104 |    7 | 10000 |        0 |  9000 |
+|  12 | deep   | aws    | 101 |    1 | 20000 |     1000 |  6000 |
+|  12 | deep   | aws    | 102 |    2 | 15000 |        0 |  9000 |
+|  12 | deep   | aws    | 103 |    4 | 25000 |     1000 | 10000 |
+|  12 | deep   | aws    | 104 |    7 | 10000 |        0 |  9000 |
++-----+--------+--------+-----+------+-------+----------+-------+
+40 rows in set (0.000 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> -- python database connectivity
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>

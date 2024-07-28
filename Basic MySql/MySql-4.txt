@@ -1,0 +1,541 @@
+
+Setting environment for using XAMPP for Windows.
+user@DEEP c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.28-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| bank_data          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| practice           |
+| pydb               |
+| python11am         |
+| python2pm          |
+| python3pm          |
+| python7pm          |
+| python9am          |
+| test               |
+| world              |
++--------------------+
+14 rows in set (0.079 sec)
+
+MariaDB [(none)]> use python11am;
+Database changed
+MariaDB [python11am]> show tables;
++----------------------+
+| Tables_in_python11am |
++----------------------+
+| fees                 |
+| person               |
+| student              |
++----------------------+
+3 rows in set (0.001 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> -- delete & truncate ?
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> -- foreign key
+MariaDB [python11am]>
+MariaDB [python11am]> -- views
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> select * from student;
++------+--------+------+
+| sid  | name   | age  |
++------+--------+------+
+|    1 | robin  |   20 |
+|    2 | aman   |   20 |
+|    4 | rajat  |   20 |
+|    7 | naman  |   20 |
+|    8 | tanu   |   20 |
+|    9 | bharat |   20 |
+|   10 | gaurav |   20 |
++------+--------+------+
+7 rows in set (0.170 sec)
+
+MariaDB [python11am]> select * from fees;
++------+-------+----------+-------+
+| fid  | fees  | discount | paid  |
++------+-------+----------+-------+
+|  101 | 25000 |     2000 | 12000 |
+|  102 | 20000 |     1000 |  7000 |
+|  103 | 15000 |        0 |  6000 |
+|  104 | 30000 |     2000 | 15000 |
+|  105 | 20000 |     1000 |  5000 |
+|  106 | 15000 |     1000 |  9000 |
+|  107 | 25000 |     1000 | 10000 |
++------+-------+----------+-------+
+7 rows in set (0.021 sec)
+
+MariaDB [python11am]> drop table fees;
+Query OK, 0 rows affected (0.021 sec)
+
+MariaDB [python11am]> show tables;
++----------------------+
+| Tables_in_python11am |
++----------------------+
+| person               |
+| student              |
++----------------------+
+2 rows in set (0.001 sec)
+
+MariaDB [python11am]> desc student;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| sid   | int(10)      | YES  |     | NULL    |       |
+| name  | varchar(100) | YES  |     | NULL    |       |
+| age   | int(3)       | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.020 sec)
+
+MariaDB [python11am]> alter table student add primary key(sid);
+Query OK, 0 rows affected (0.079 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [python11am]> desc student;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| sid   | int(10)      | NO   | PRI | NULL    |       |
+| name  | varchar(100) | YES  |     | NULL    |       |
+| age   | int(3)       | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.029 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> create table fees(fid int(20) primary key, sid int(5), fees double, discount double, paid double, foreign key(sid) references student(sid));
+Query OK, 0 rows affected (0.055 sec)
+
+MariaDB [python11am]> desc fees;
++----------+---------+------+-----+---------+-------+
+| Field    | Type    | Null | Key | Default | Extra |
++----------+---------+------+-----+---------+-------+
+| fid      | int(20) | NO   | PRI | NULL    |       |
+| sid      | int(5)  | YES  | MUL | NULL    |       |
+| fees     | double  | YES  |     | NULL    |       |
+| discount | double  | YES  |     | NULL    |       |
+| paid     | double  | YES  |     | NULL    |       |
++----------+---------+------+-----+---------+-------+
+5 rows in set (0.017 sec)
+
+MariaDB [python11am]> select * from student;
++-----+--------+------+
+| sid | name   | age  |
++-----+--------+------+
+|   1 | robin  |   20 |
+|   2 | aman   |   20 |
+|   4 | rajat  |   20 |
+|   7 | naman  |   20 |
+|   8 | tanu   |   20 |
+|   9 | bharat |   20 |
+|  10 | gaurav |   20 |
++-----+--------+------+
+7 rows in set (0.000 sec)
+
+MariaDB [python11am]> insert into fees values(101, 1, 20000, 1000, 6000), (102, 2, 15000, 0, 9000);
+Query OK, 2 rows affected (0.013 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [python11am]> insert into fees values(103, 3, 20000, 0, 7000);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`python11am`.`fees`, CONSTRAINT `fees_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `student` (`sid`))
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> select * from fees;
++-----+------+-------+----------+------+
+| fid | sid  | fees  | discount | paid |
++-----+------+-------+----------+------+
+| 101 |    1 | 20000 |     1000 | 6000 |
+| 102 |    2 | 15000 |        0 | 9000 |
++-----+------+-------+----------+------+
+2 rows in set (0.000 sec)
+
+MariaDB [python11am]> insert into fees values(103, 4, 25000, 1000, 10000), (104, 7, 10000, 0, 9000);
+Query OK, 2 rows affected (0.011 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [python11am]> select * from student;
++-----+--------+------+
+| sid | name   | age  |
++-----+--------+------+
+|   1 | robin  |   20 |
+|   2 | aman   |   20 |
+|   4 | rajat  |   20 |
+|   7 | naman  |   20 |
+|   8 | tanu   |   20 |
+|   9 | bharat |   20 |
+|  10 | gaurav |   20 |
++-----+--------+------+
+7 rows in set (0.001 sec)
+
+MariaDB [python11am]> select * from fees;
++-----+------+-------+----------+-------+
+| fid | sid  | fees  | discount | paid  |
++-----+------+-------+----------+-------+
+| 101 |    1 | 20000 |     1000 |  6000 |
+| 102 |    2 | 15000 |        0 |  9000 |
+| 103 |    4 | 25000 |     1000 | 10000 |
+| 104 |    7 | 10000 |        0 |  9000 |
++-----+------+-------+----------+-------+
+4 rows in set (0.000 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> select sid from student where name in ('robin', 'rajat');
++-----+
+| sid |
++-----+
+|   1 |
+|   4 |
++-----+
+2 rows in set (0.020 sec)
+
+MariaDB [python11am]> select fees from fees where sid in (1,4);
++-------+
+| fees  |
++-------+
+| 20000 |
+| 25000 |
++-------+
+2 rows in set (0.003 sec)
+
+MariaDB [python11am]> select fees from fees where sid in (select sid from student where name in ('robin', 'rajat'));
++-------+
+| fees  |
++-------+
+| 20000 |
+| 25000 |
++-------+
+2 rows in set (0.015 sec)
+
+MariaDB [python11am]> select sid from fees where paid < 10000;
++------+
+| sid  |
++------+
+|    1 |
+|    2 |
+|    7 |
++------+
+3 rows in set (0.010 sec)
+
+MariaDB [python11am]> select name from student where sid in (select sid from fees where paid < 10000);
++-------+
+| name  |
++-------+
+| robin |
+| aman  |
+| naman |
++-------+
+3 rows in set (0.010 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> -- views
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> show tables;
++----------------------+
+| Tables_in_python11am |
++----------------------+
+| fees                 |
+| person               |
+| student              |
++----------------------+
+3 rows in set (0.006 sec)
+
+MariaDB [python11am]> select * from student;
++-----+--------+------+
+| sid | name   | age  |
++-----+--------+------+
+|   1 | robin  |   20 |
+|   2 | aman   |   20 |
+|   4 | rajat  |   20 |
+|   7 | naman  |   20 |
+|   8 | tanu   |   20 |
+|   9 | bharat |   20 |
+|  10 | gaurav |   20 |
++-----+--------+------+
+7 rows in set (0.017 sec)
+
+MariaDB [python11am]> update student set age=22 where sid in (1,4,9);
+Query OK, 3 rows affected (0.015 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+MariaDB [python11am]> select * from student;
++-----+--------+------+
+| sid | name   | age  |
++-----+--------+------+
+|   1 | robin  |   22 |
+|   2 | aman   |   20 |
+|   4 | rajat  |   22 |
+|   7 | naman  |   20 |
+|   8 | tanu   |   20 |
+|   9 | bharat |   22 |
+|  10 | gaurav |   20 |
++-----+--------+------+
+7 rows in set (0.000 sec)
+
+MariaDB [python11am]> update student set age=26 where sid in (10, 7);
+Query OK, 2 rows affected (0.002 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+MariaDB [python11am]> select * from student;
++-----+--------+------+
+| sid | name   | age  |
++-----+--------+------+
+|   1 | robin  |   22 |
+|   2 | aman   |   20 |
+|   4 | rajat  |   22 |
+|   7 | naman  |   26 |
+|   8 | tanu   |   20 |
+|   9 | bharat |   22 |
+|  10 | gaurav |   26 |
++-----+--------+------+
+7 rows in set (0.000 sec)
+
+MariaDB [python11am]> create view temp as select * from student;
+Query OK, 0 rows affected (0.007 sec)
+
+MariaDB [python11am]> show tables;
++----------------------+
+| Tables_in_python11am |
++----------------------+
+| fees                 |
+| person               |
+| student              |
+| temp                 |
++----------------------+
+4 rows in set (0.001 sec)
+
+MariaDB [python11am]> select * from temp;
++-----+--------+------+
+| sid | name   | age  |
++-----+--------+------+
+|   1 | robin  |   22 |
+|   2 | aman   |   20 |
+|   4 | rajat  |   22 |
+|   7 | naman  |   26 |
+|   8 | tanu   |   20 |
+|   9 | bharat |   22 |
+|  10 | gaurav |   26 |
++-----+--------+------+
+7 rows in set (0.011 sec)
+
+MariaDB [python11am]> select * from student;
++-----+--------+------+
+| sid | name   | age  |
++-----+--------+------+
+|   1 | robin  |   22 |
+|   2 | aman   |   20 |
+|   4 | rajat  |   22 |
+|   7 | naman  |   26 |
+|   8 | tanu   |   20 |
+|   9 | bharat |   22 |
+|  10 | gaurav |   26 |
++-----+--------+------+
+7 rows in set (0.000 sec)
+
+MariaDB [python11am]> insert into student values(3, 'ram', 21);
+Query OK, 1 row affected (0.012 sec)
+
+MariaDB [python11am]> select * from student;
++-----+--------+------+
+| sid | name   | age  |
++-----+--------+------+
+|   1 | robin  |   22 |
+|   2 | aman   |   20 |
+|   3 | ram    |   21 |
+|   4 | rajat  |   22 |
+|   7 | naman  |   26 |
+|   8 | tanu   |   20 |
+|   9 | bharat |   22 |
+|  10 | gaurav |   26 |
++-----+--------+------+
+8 rows in set (0.000 sec)
+
+MariaDB [python11am]> select * from temp;
++-----+--------+------+
+| sid | name   | age  |
++-----+--------+------+
+|   1 | robin  |   22 |
+|   2 | aman   |   20 |
+|   3 | ram    |   21 |
+|   4 | rajat  |   22 |
+|   7 | naman  |   26 |
+|   8 | tanu   |   20 |
+|   9 | bharat |   22 |
+|  10 | gaurav |   26 |
++-----+--------+------+
+8 rows in set (0.001 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> drop table temp;
+ERROR 1965 (42S02): 'python11am.temp' is a view
+MariaDB [python11am]> drop view temp;
+Query OK, 0 rows affected (0.001 sec)
+
+MariaDB [python11am]> show tables;
++----------------------+
+| Tables_in_python11am |
++----------------------+
+| fees                 |
+| person               |
+| student              |
++----------------------+
+3 rows in set (0.001 sec)
+
+MariaDB [python11am]> select * from student;
++-----+--------+------+
+| sid | name   | age  |
++-----+--------+------+
+|   1 | robin  |   22 |
+|   2 | aman   |   20 |
+|   3 | ram    |   21 |
+|   4 | rajat  |   22 |
+|   7 | naman  |   26 |
+|   8 | tanu   |   20 |
+|   9 | bharat |   22 |
+|  10 | gaurav |   26 |
++-----+--------+------+
+8 rows in set (0.000 sec)
+
+MariaDB [python11am]> create view temp as select * from student where age <25;
+Query OK, 0 rows affected (0.013 sec)
+
+MariaDB [python11am]> select * from temp;
++-----+--------+------+
+| sid | name   | age  |
++-----+--------+------+
+|   1 | robin  |   22 |
+|   2 | aman   |   20 |
+|   3 | ram    |   21 |
+|   4 | rajat  |   22 |
+|   8 | tanu   |   20 |
+|   9 | bharat |   22 |
++-----+--------+------+
+6 rows in set (0.011 sec)
+
+MariaDB [python11am]> select * from student;
++-----+--------+------+
+| sid | name   | age  |
++-----+--------+------+
+|   1 | robin  |   22 |
+|   2 | aman   |   20 |
+|   3 | ram    |   21 |
+|   4 | rajat  |   22 |
+|   7 | naman  |   26 |
+|   8 | tanu   |   20 |
+|   9 | bharat |   22 |
+|  10 | gaurav |   26 |
++-----+--------+------+
+8 rows in set (0.000 sec)
+
+MariaDB [python11am]> insert into student values(11, 'deepak', 20);
+Query OK, 1 row affected (0.012 sec)
+
+MariaDB [python11am]> select * from student;
++-----+--------+------+
+| sid | name   | age  |
++-----+--------+------+
+|   1 | robin  |   22 |
+|   2 | aman   |   20 |
+|   3 | ram    |   21 |
+|   4 | rajat  |   22 |
+|   7 | naman  |   26 |
+|   8 | tanu   |   20 |
+|   9 | bharat |   22 |
+|  10 | gaurav |   26 |
+|  11 | deepak |   20 |
++-----+--------+------+
+9 rows in set (0.000 sec)
+
+MariaDB [python11am]> select * from temp;
++-----+--------+------+
+| sid | name   | age  |
++-----+--------+------+
+|   1 | robin  |   22 |
+|   2 | aman   |   20 |
+|   3 | ram    |   21 |
+|   4 | rajat  |   22 |
+|   8 | tanu   |   20 |
+|   9 | bharat |   22 |
+|  11 | deepak |   20 |
++-----+--------+------+
+7 rows in set (0.000 sec)
+
+MariaDB [python11am]> insert into student values(12, 'deep', 26);
+Query OK, 1 row affected (0.012 sec)
+
+MariaDB [python11am]> select * from student;
++-----+--------+------+
+| sid | name   | age  |
++-----+--------+------+
+|   1 | robin  |   22 |
+|   2 | aman   |   20 |
+|   3 | ram    |   21 |
+|   4 | rajat  |   22 |
+|   7 | naman  |   26 |
+|   8 | tanu   |   20 |
+|   9 | bharat |   22 |
+|  10 | gaurav |   26 |
+|  11 | deepak |   20 |
+|  12 | deep   |   26 |
++-----+--------+------+
+10 rows in set (0.000 sec)
+
+MariaDB [python11am]> select * from temp;
++-----+--------+------+
+| sid | name   | age  |
++-----+--------+------+
+|   1 | robin  |   22 |
+|   2 | aman   |   20 |
+|   3 | ram    |   21 |
+|   4 | rajat  |   22 |
+|   8 | tanu   |   20 |
+|   9 | bharat |   22 |
+|  11 | deepak |   20 |
++-----+--------+------+
+7 rows in set (0.001 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>

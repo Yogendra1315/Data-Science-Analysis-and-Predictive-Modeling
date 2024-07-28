@@ -1,0 +1,330 @@
+Last login: Sat Sep 23 06:40:49 on console
+(base) yogendra@yogendras-MacBook-Pro ~ % /usr/local/mysql-8.0.23-macos10.15-x86_64/bin/mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.23 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| arya_ds            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.01 sec)
+
+mysql> use arya_ds;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_arya_ds |
++-------------------+
+| fees              |
+| person            |
+| Student           |
++-------------------+
+3 rows in set (0.01 sec)
+
+mysql> select * from person;
+Empty set (0.01 sec)
+
+mysql> create view temp as select * from Student where Age>20;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from temp;
++------+--------+------+
+| S_id | Name   | Age  |
++------+--------+------+
+|    1 | Aman   |   25 |
+|    2 | Simran |   26 |
+|    3 | Ram    |   24 |
+|    6 | Yash   |   21 |
+|    8 | Kartik |   21 |
+|    9 | Piyush |   22 |
++------+--------+------+
+6 rows in set (0.01 sec)
+
+mysql> insert into person
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> desc person;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| pid   | int         | YES  |     | NULL    |       |
+| name  | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> alter table person
+    -> add(city varchar(10));
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> add(city varchar(10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add(city varchar(10))' at line 1
+mysql> desc person;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| pid   | int         | YES  |     | NULL    |       |
+| name  | varchar(20) | YES  |     | NULL    |       |
+| city  | varchar(10) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> insert into person
+    -> values(1,"aman",'jaipur'),
+    -> (2,'piyush','ajmer'),
+    -> (3,'yogi','delhi'),
+    -> (4,'kartik','jaipur');
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> create view new as select * from person 
+    -> where city='jaipur';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from new;
++------+--------+--------+
+| pid  | name   | city   |
++------+--------+--------+
+|    1 | aman   | jaipur |
+|    4 | kartik | jaipur |
++------+--------+--------+
+2 rows in set (0.00 sec)
+
+mysql> insert into person
+    -> values(5,'yash','jaipur');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from new;
++------+--------+--------+
+| pid  | name   | city   |
++------+--------+--------+
+|    1 | aman   | jaipur |
+|    4 | kartik | jaipur |
+|    5 | yash   | jaipur |
++------+--------+--------+
+3 rows in set (0.00 sec)
+
+mysql> drop view temp;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * 
+    -> from person
+    -> where name like 'kartik';
++------+--------+--------+
+| pid  | name   | city   |
++------+--------+--------+
+|    4 | kartik | jaipur |
++------+--------+--------+
+1 row in set (0.01 sec)
+
+mysql> select *
+    -> from person
+    -> where name like '%a_';
++------+------+--------+
+| pid  | name | city   |
++------+------+--------+
+|    1 | aman | jaipur |
++------+------+--------+
+1 row in set (0.00 sec)
+
+mysql> select pid from person
+    -> where name like '%s_' and city like '_a%';
++------+
+| pid  |
++------+
+|    5 |
++------+
+1 row in set (0.00 sec)
+
+mysql> select pid from person where name like '%s_' or city like '_a%';
++------+
+| pid  |
++------+
+|    1 |
+|    2 |
+|    4 |
+|    5 |
++------+
+4 rows in set (0.00 sec)
+
+mysql> select city from person where city like '_a%';
++--------+
+| city   |
++--------+
+| jaipur |
+| jaipur |
+| jaipur |
++--------+
+3 rows in set (0.00 sec)
+
+mysql> -- foreign key
+mysql> create table filter_fees as select * from fees where fees > 40500;
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from filter_fees;
++-----+-------+---------+
+| sid | fees  | deposit |
++-----+-------+---------+
+|   1 | 42500 |   28500 |
+|   2 | 42500 |   38500 |
+|   3 | 42500 |   42500 |
++-----+-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_arya_ds |
++-------------------+
+| fees              |
+| filter_fees       |
+| new               |
+| person            |
+| Student           |
++-------------------+
+5 rows in set (0.00 sec)
+
+mysql> desc fees;
++---------+------+------+-----+---------+-------+
+| Field   | Type | Null | Key | Default | Extra |
++---------+------+------+-----+---------+-------+
+| sid     | int  | NO   | PRI | NULL    |       |
+| fees    | int  | YES  |     | NULL    |       |
+| deposit | int  | YES  |     | NULL    |       |
++---------+------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> create table address(
+    -> sid int(3) ,
+    -> city varchar(20),
+    -> state varchar(10));
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> insert into address
+    -> value(1,'jaipur','rajasthan'),
+    -> (2,'ajmer','rajasthan'),
+    -> (3,'amer','rajasthan');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> alter table address
+    -> modify(sid foreign key references fees(sid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(sid foreign key references fees(sid))' at line 2
+mysql> alter table address modify(sid foreign key);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(sid foreign key)' at line 1
+mysql> alter table address modify(foreign key(sid) references fees(sid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(foreign key(sid) references fees(sid))' at line 1
+mysql> drop table address;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_arya_ds |
++-------------------+
+| fees              |
+| filter_fees       |
+| new               |
+| person            |
+| Student           |
++-------------------+
+5 rows in set (0.00 sec)
+
+mysql> create table address(
+    -> aid int(10) primary key,
+    -> city varchar(20),
+    -> state varchar(20),
+    -> foreign key(sid) references fees(sid));
+ERROR 1072 (42000): Key column 'sid' doesn't exist in table
+mysql> create table address(
+    -> aid int(10) primary key,
+    -> sid int(3),
+    -> state varchar(20),
+    -> city varchar(20),
+    -> sid int(3),;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 6
+mysql> create table address(
+    -> aid int(10) primary key,
+    -> sid int(3),;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql> create table address(
+    -> aid int(10) primary key,
+    -> sid int(3),
+    -> city varchar(20),
+    -> state varchar(20),
+    -> foreign key(sid) references fees(sid));
+Query OK, 0 rows affected, 2 warnings (0.01 sec)
+
+mysql> insert into address
+    -> values(1,1,'jaipur','rajasthan'),
+    -> (2,2,'ajmer','rajasthan');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select *from
+    -> address;
++-----+------+--------+-----------+
+| aid | sid  | city   | state     |
++-----+------+--------+-----------+
+|   1 |    1 | jaipur | rajasthan |
+|   2 |    2 | ajmer  | rajasthan |
++-----+------+--------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select fees from fees address 
+    -> where city ='jaipur';
+ERROR 1054 (42S22): Unknown column 'city' in 'where clause'
+mysql> select fees from fees, address  where city ='jaipur';
++-------+
+| fees  |
++-------+
+| 42500 |
+| 42500 |
+| 42500 |
++-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from fees , address where fees.sid=address.sid;
++-----+-------+---------+-----+------+--------+-----------+
+| sid | fees  | deposit | aid | sid  | city   | state     |
++-----+-------+---------+-----+------+--------+-----------+
+|   1 | 42500 |   28500 |   1 |    1 | jaipur | rajasthan |
+|   2 | 42500 |   38500 |   2 |    2 | ajmer  | rajasthan |
++-----+-------+---------+-----+------+--------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> insert into address
+    -> values(4,,3,'jaipur','rajasthan');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',3,'jaipur','rajasthan')' at line 2
+mysql> insert into address values(4,3,'jaipur','rajasthan');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from fees , address where fees.sid=address.sid;
++-----+-------+---------+-----+------+--------+-----------+
+| sid | fees  | deposit | aid | sid  | city   | state     |
++-----+-------+---------+-----+------+--------+-----------+
+|   1 | 42500 |   28500 |   1 |    1 | jaipur | rajasthan |
+|   2 | 42500 |   38500 |   2 |    2 | ajmer  | rajasthan |
+|   3 | 42500 |   42500 |   4 |    3 | jaipur | rajasthan |
++-----+-------+---------+-----+------+--------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> 

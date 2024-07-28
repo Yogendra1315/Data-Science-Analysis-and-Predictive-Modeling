@@ -1,0 +1,616 @@
+
+Setting environment for using XAMPP for Windows.
+user@DEEP c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.28-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| bank_data          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| practice           |
+| pydb               |
+| python11am         |
+| python2pm          |
+| python3pm          |
+| python5pm          |
+| python7pm          |
+| python9am          |
+| test               |
+| world              |
++--------------------+
+15 rows in set (0.029 sec)
+
+MariaDB [(none)]> use python11am;
+Database changed
+MariaDB [python11am]> show tables;
++----------------------+
+| Tables_in_python11am |
++----------------------+
+| student              |
++----------------------+
+1 row in set (0.000 sec)
+
+MariaDB [python11am]> select * from student;
++------+--------+------+
+| sid  | name   | age  |
++------+--------+------+
+|    1 | robin  |   25 |
+|    2 | aman   |   22 |
+|    3 | sachin |   27 |
++------+--------+------+
+3 rows in set (0.064 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> insert into student values(4, 'rajat', 30), (5, 'simran', 25);
+Query OK, 2 rows affected (0.002 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> insert into student values(6, 'ravi');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> insert into student(sid, name) values(6, 'ravi');
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> select * from student;
++------+--------+------+
+| sid  | name   | age  |
++------+--------+------+
+|    1 | robin  |   25 |
+|    2 | aman   |   22 |
+|    3 | sachin |   27 |
+|    4 | rajat  |   30 |
+|    5 | simran |   25 |
+|    6 | ravi   | NULL |
++------+--------+------+
+6 rows in set (0.000 sec)
+
+MariaDB [python11am]> desc student;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| sid   | int(10)      | YES  |     | NULL    |       |
+| name  | varchar(100) | YES  |     | NULL    |       |
+| age   | int(3)       | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.013 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> -- create a table (fees)  column names are --->  fid, fees, discount, paid
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> create table fees(fid int(10), fees double, discount double not null, paid double);
+Query OK, 0 rows affected (0.013 sec)
+
+MariaDB [python11am]> show tables;
++----------------------+
+| Tables_in_python11am |
++----------------------+
+| fees                 |
+| student              |
++----------------------+
+2 rows in set (0.001 sec)
+
+MariaDB [python11am]> desc fees;
++----------+---------+------+-----+---------+-------+
+| Field    | Type    | Null | Key | Default | Extra |
++----------+---------+------+-----+---------+-------+
+| fid      | int(10) | YES  |     | NULL    |       |
+| fees     | double  | YES  |     | NULL    |       |
+| discount | double  | NO   |     | NULL    |       |
+| paid     | double  | YES  |     | NULL    |       |
++----------+---------+------+-----+---------+-------+
+4 rows in set (0.015 sec)
+
+MariaDB [python11am]> insert into fees values(101, 20000, 1000, 12000), (102, 25000, 2000, 15000);
+Query OK, 2 rows affected (0.003 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [python11am]> insert into fees values(103, 10000, 0, 5000), (104, 30000, 2000, 10000);
+Query OK, 2 rows affected (0.003 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [python11am]> select * from fees;
++------+-------+----------+-------+
+| fid  | fees  | discount | paid  |
++------+-------+----------+-------+
+|  101 | 20000 |     1000 | 12000 |
+|  102 | 25000 |     2000 | 15000 |
+|  103 | 10000 |        0 |  5000 |
+|  104 | 30000 |     2000 | 10000 |
++------+-------+----------+-------+
+4 rows in set (0.000 sec)
+
+MariaDB [python11am]> insert into fees(fid, fees, paid) values(105, 15000, 7000);
+Query OK, 1 row affected, 1 warning (0.004 sec)
+
+MariaDB [python11am]> select * from fees;
++------+-------+----------+-------+
+| fid  | fees  | discount | paid  |
++------+-------+----------+-------+
+|  101 | 20000 |     1000 | 12000 |
+|  102 | 25000 |     2000 | 15000 |
+|  103 | 10000 |        0 |  5000 |
+|  104 | 30000 |     2000 | 10000 |
+|  105 | 15000 |        0 |  7000 |
++------+-------+----------+-------+
+5 rows in set (0.001 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> show tables;
++----------------------+
+| Tables_in_python11am |
++----------------------+
+| fees                 |
+| student              |
++----------------------+
+2 rows in set (0.000 sec)
+
+MariaDB [python11am]> select * from student;
++------+--------+------+
+| sid  | name   | age  |
++------+--------+------+
+|    1 | robin  |   25 |
+|    2 | aman   |   22 |
+|    3 | sachin |   27 |
+|    4 | rajat  |   30 |
+|    5 | simran |   25 |
+|    6 | ravi   | NULL |
++------+--------+------+
+6 rows in set (0.000 sec)
+
+MariaDB [python11am]> -- where
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> select * from student where age < 25;
++------+------+------+
+| sid  | name | age  |
++------+------+------+
+|    2 | aman |   22 |
++------+------+------+
+1 row in set (0.001 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> select * from student where sid = 5;
++------+--------+------+
+| sid  | name   | age  |
++------+--------+------+
+|    5 | simran |   25 |
++------+--------+------+
+1 row in set (0.001 sec)
+
+MariaDB [python11am]> select * from student;
++------+--------+------+
+| sid  | name   | age  |
++------+--------+------+
+|    1 | robin  |   25 |
+|    2 | aman   |   22 |
+|    3 | sachin |   27 |
+|    4 | rajat  |   30 |
+|    5 | simran |   25 |
+|    6 | ravi   | NULL |
++------+--------+------+
+6 rows in set (0.000 sec)
+
+MariaDB [python11am]> insert into student values(7, 'naman', 20), (8, 'tanu', 23), (9, 'bharat', 21);
+Query OK, 3 rows affected (0.003 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [python11am]> insert into student values(10, 'gaurav', 28);
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [python11am]> select * from student;
++------+--------+------+
+| sid  | name   | age  |
++------+--------+------+
+|    1 | robin  |   25 |
+|    2 | aman   |   22 |
+|    3 | sachin |   27 |
+|    4 | rajat  |   30 |
+|    5 | simran |   25 |
+|    6 | ravi   | NULL |
+|    7 | naman  |   20 |
+|    8 | tanu   |   23 |
+|    9 | bharat |   21 |
+|   10 | gaurav |   28 |
++------+--------+------+
+10 rows in set (0.000 sec)
+
+MariaDB [python11am]> select * from student where age >25 and sid > 5;
++------+--------+------+
+| sid  | name   | age  |
++------+--------+------+
+|   10 | gaurav |   28 |
++------+--------+------+
+1 row in set (0.001 sec)
+
+MariaDB [python11am]> select * from student where age >25 or sid > 5;
++------+--------+------+
+| sid  | name   | age  |
++------+--------+------+
+|    3 | sachin |   27 |
+|    4 | rajat  |   30 |
+|    6 | ravi   | NULL |
+|    7 | naman  |   20 |
+|    8 | tanu   |   23 |
+|    9 | bharat |   21 |
+|   10 | gaurav |   28 |
++------+--------+------+
+7 rows in set (0.000 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> select * from student;
++------+--------+------+
+| sid  | name   | age  |
++------+--------+------+
+|    1 | robin  |   25 |
+|    2 | aman   |   22 |
+|    3 | sachin |   27 |
+|    4 | rajat  |   30 |
+|    5 | simran |   25 |
+|    6 | ravi   | NULL |
+|    7 | naman  |   20 |
+|    8 | tanu   |   23 |
+|    9 | bharat |   21 |
+|   10 | gaurav |   28 |
++------+--------+------+
+10 rows in set (0.000 sec)
+
+MariaDB [python11am]> select * from student where name='aman' or name='sachin' or name='simran';
++------+--------+------+
+| sid  | name   | age  |
++------+--------+------+
+|    2 | aman   |   22 |
+|    3 | sachin |   27 |
+|    5 | simran |   25 |
++------+--------+------+
+3 rows in set (0.001 sec)
+
+MariaDB [python11am]> select * from student where name in ('aman', 'simran', 'sachin');
++------+--------+------+
+| sid  | name   | age  |
++------+--------+------+
+|    2 | aman   |   22 |
+|    3 | sachin |   27 |
+|    5 | simran |   25 |
++------+--------+------+
+3 rows in set (0.000 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> select * from student;
++------+--------+------+
+| sid  | name   | age  |
++------+--------+------+
+|    1 | robin  |   25 |
+|    2 | aman   |   22 |
+|    3 | sachin |   27 |
+|    4 | rajat  |   30 |
+|    5 | simran |   25 |
+|    6 | ravi   | NULL |
+|    7 | naman  |   20 |
+|    8 | tanu   |   23 |
+|    9 | bharat |   21 |
+|   10 | gaurav |   28 |
++------+--------+------+
+10 rows in set (0.000 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> -- update table set column=value where condition
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> update student set age=25 where sid=3;
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [python11am]> select * from student;
++------+--------+------+
+| sid  | name   | age  |
++------+--------+------+
+|    1 | robin  |   25 |
+|    2 | aman   |   22 |
+|    3 | sachin |   25 |
+|    4 | rajat  |   30 |
+|    5 | simran |   25 |
+|    6 | ravi   | NULL |
+|    7 | naman  |   20 |
+|    8 | tanu   |   23 |
+|    9 | bharat |   21 |
+|   10 | gaurav |   28 |
++------+--------+------+
+10 rows in set (0.000 sec)
+
+MariaDB [python11am]> update student set age=19 where age is null;
+Query OK, 1 row affected (0.002 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [python11am]> select * from student;
++------+--------+------+
+| sid  | name   | age  |
++------+--------+------+
+|    1 | robin  |   25 |
+|    2 | aman   |   22 |
+|    3 | sachin |   25 |
+|    4 | rajat  |   30 |
+|    5 | simran |   25 |
+|    6 | ravi   |   19 |
+|    7 | naman  |   20 |
+|    8 | tanu   |   23 |
+|    9 | bharat |   21 |
+|   10 | gaurav |   28 |
++------+--------+------+
+10 rows in set (0.000 sec)
+
+MariaDB [python11am]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| bank_data          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| practice           |
+| pydb               |
+| python11am         |
+| python2pm          |
+| python3pm          |
+| python5pm          |
+| python7pm          |
+| python9am          |
+| test               |
+| world              |
++--------------------+
+15 rows in set (0.001 sec)
+
+MariaDB [python11am]> select * from student;
++------+--------+------+
+| sid  | name   | age  |
++------+--------+------+
+|    1 | robin  |   25 |
+|    2 | aman   |   22 |
+|    3 | sachin |   25 |
+|    4 | rajat  |   30 |
+|    5 | simran |   25 |
+|    6 | ravi   |   19 |
+|    7 | naman  |   20 |
+|    8 | tanu   |   23 |
+|    9 | bharat |   21 |
+|   10 | gaurav |   28 |
++------+--------+------+
+10 rows in set (0.000 sec)
+
+MariaDB [python11am]> update student set age=20;
+Query OK, 9 rows affected (0.003 sec)
+Rows matched: 10  Changed: 9  Warnings: 0
+
+MariaDB [python11am]> select * from student;
++------+--------+------+
+| sid  | name   | age  |
++------+--------+------+
+|    1 | robin  |   20 |
+|    2 | aman   |   20 |
+|    3 | sachin |   20 |
+|    4 | rajat  |   20 |
+|    5 | simran |   20 |
+|    6 | ravi   |   20 |
+|    7 | naman  |   20 |
+|    8 | tanu   |   20 |
+|    9 | bharat |   20 |
+|   10 | gaurav |   20 |
++------+--------+------+
+10 rows in set (0.000 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> -- delete drop truncate
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> -- drop
+MariaDB [python11am]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| bank_data          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| practice           |
+| pydb               |
+| python11am         |
+| python2pm          |
+| python3pm          |
+| python5pm          |
+| python7pm          |
+| python9am          |
+| test               |
+| world              |
++--------------------+
+15 rows in set (0.001 sec)
+
+MariaDB [python11am]> -- drop database database_name;
+MariaDB [python11am]> drop database python5pm;
+Query OK, 1 row affected (0.045 sec)
+
+MariaDB [python11am]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| bank_data          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| practice           |
+| pydb               |
+| python11am         |
+| python2pm          |
+| python3pm          |
+| python7pm          |
+| python9am          |
+| test               |
+| world              |
++--------------------+
+14 rows in set (0.001 sec)
+
+MariaDB [python11am]> use world;
+Database changed
+MariaDB [world]> show tables;
++-----------------+
+| Tables_in_world |
++-----------------+
+| city            |
+| country         |
+| countrylanguage |
+| filter_city     |
++-----------------+
+4 rows in set (0.001 sec)
+
+MariaDB [world]> -- drop table table_name;
+MariaDB [world]>
+MariaDB [world]> drop table country_language;
+ERROR 1051 (42S02): Unknown table 'world.country_language'
+MariaDB [world]> drop table countrylanguage;
+Query OK, 0 rows affected (0.012 sec)
+
+MariaDB [world]> show tables;
++-----------------+
+| Tables_in_world |
++-----------------+
+| city            |
+| country         |
+| filter_city     |
++-----------------+
+3 rows in set (0.001 sec)
+
+MariaDB [world]>
+MariaDB [world]>
+MariaDB [world]>
+MariaDB [world]>
+MariaDB [world]> -- delete
+MariaDB [world]>
+MariaDB [world]>
+MariaDB [world]> use python11am;
+Database changed
+MariaDB [python11am]> show tables;
++----------------------+
+| Tables_in_python11am |
++----------------------+
+| fees                 |
+| student              |
++----------------------+
+2 rows in set (0.001 sec)
+
+MariaDB [python11am]> select * from student;
++------+--------+------+
+| sid  | name   | age  |
++------+--------+------+
+|    1 | robin  |   20 |
+|    2 | aman   |   20 |
+|    3 | sachin |   20 |
+|    4 | rajat  |   20 |
+|    5 | simran |   20 |
+|    6 | ravi   |   20 |
+|    7 | naman  |   20 |
+|    8 | tanu   |   20 |
+|    9 | bharat |   20 |
+|   10 | gaurav |   20 |
++------+--------+------+
+10 rows in set (0.000 sec)
+
+MariaDB [python11am]> -- delete from table where condition
+MariaDB [python11am]>
+MariaDB [python11am]> delete from student where sid in (3,5,6);
+Query OK, 3 rows affected (0.003 sec)
+
+MariaDB [python11am]> select * from student;
++------+--------+------+
+| sid  | name   | age  |
++------+--------+------+
+|    1 | robin  |   20 |
+|    2 | aman   |   20 |
+|    4 | rajat  |   20 |
+|    7 | naman  |   20 |
+|    8 | tanu   |   20 |
+|    9 | bharat |   20 |
+|   10 | gaurav |   20 |
++------+--------+------+
+7 rows in set (0.000 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> select * from fees;
++------+-------+----------+-------+
+| fid  | fees  | discount | paid  |
++------+-------+----------+-------+
+|  101 | 20000 |     1000 | 12000 |
+|  102 | 25000 |     2000 | 15000 |
+|  103 | 10000 |        0 |  5000 |
+|  104 | 30000 |     2000 | 10000 |
+|  105 | 15000 |        0 |  7000 |
++------+-------+----------+-------+
+5 rows in set (0.000 sec)
+
+MariaDB [python11am]> -- truncate
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> truncate fees;
+Query OK, 0 rows affected (0.015 sec)
+
+MariaDB [python11am]> select * from fees;
+Empty set (0.000 sec)
+
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]> -- difference between drop, delete and truncate
+MariaDB [python11am]>
+MariaDB [python11am]>
+MariaDB [python11am]>
