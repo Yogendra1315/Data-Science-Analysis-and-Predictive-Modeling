@@ -9,12 +9,13 @@ This repository contains multiple Jupyter Notebooks and Python scripts showcasin
 - 📊 Exploratory Data Analysis (EDA)
 - 📈 Visualizations using Matplotlib, Seaborn, and Plotly
 - 🔧 Feature engineering
-- Machine Learning
+-  Machine Learning
 
 ## 📁 Folder Structure
 
 - `Dataset/` – Contains datasets used for analysis
-- `Python Code/` – Includes Python scripts for preprocessing, visualization, and feature engineering
+- `Data Science/` – Includes Python scripts for preprocessing, visualization, and feature engineering
+- `Machine Learning/` – Includes Python scripts for visualization, feature engineering, and Model Training
 - `.ipynb files` – Jupyter Notebooks for end-to-end data science and Machine Learning tasks
 - `Dashboard` – Data Visualization: Dashboards
 
